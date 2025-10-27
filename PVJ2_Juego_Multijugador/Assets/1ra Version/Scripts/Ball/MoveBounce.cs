@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class MoveBounce : MonoBehaviour
 {
-    private float _speed = 8f;
+    private float _speed = 10f;
     private float _limitX = 9f;      // Límite horizontal
     private float _limitY = 4.5f;    // Límite vertical
     private float _goalHeight = 3f;  // Altura del área de gol (zona central)
