@@ -8,6 +8,7 @@ public class MoveVertical : MonoBehaviour
 
     private Rigidbody2D _rb;
 
+    private Vector2 _posStart;
     private void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
@@ -15,6 +16,8 @@ public class MoveVertical : MonoBehaviour
         // Detecta los limites del sprite 
         SpriteRenderer sr = GetComponent<SpriteRenderer>();
         _extremesY = sr.bounds.extents.y;
+
+        _posStart = transform.position;
     }
 
     void Update()
@@ -26,5 +29,10 @@ public class MoveVertical : MonoBehaviour
         Vector2 pos = transform.position;
         pos.y = Mathf.Clamp(pos.y, -_limitY + _extremesY, _limitY - _extremesY);
         transform.position = pos;
+    }
+
+    public void ResetPos()
+    {
+        transform.position = _posStart;
     }
 }
