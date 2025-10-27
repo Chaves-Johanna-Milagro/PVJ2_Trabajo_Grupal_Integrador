@@ -11,11 +11,19 @@ public class MoveBounce : MonoBehaviour
     private Rigidbody2D _rb;
 
     private MoveVertical _movePalet;
+
+    private ScoreRight _scoreRight;
+    private ScoreLeft _scoreLeft;
+
     void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
 
         _movePalet = Object.FindAnyObjectByType<MoveVertical>();
+
+        _scoreRight = Object.FindAnyObjectByType<ScoreRight>();
+        _scoreLeft = Object.FindAnyObjectByType<ScoreLeft>();
+
     }
 
     void Start()
@@ -43,6 +51,7 @@ public class MoveBounce : MonoBehaviour
                 _movePalet.ResetPos();
                 Launch();
                 Debug.Log("¡Gol derecha!");
+                _scoreLeft.IncreasePoint();
                 return;
             }
             else
@@ -62,6 +71,7 @@ public class MoveBounce : MonoBehaviour
                 _movePalet.ResetPos();
                 Launch();
                 Debug.Log("¡Gol izquierda!");
+                _scoreRight.IncreasePoint();
                 return;
             }
             else
