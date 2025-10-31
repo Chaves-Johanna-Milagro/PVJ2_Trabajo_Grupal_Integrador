@@ -52,6 +52,7 @@ public class MoveBounce : MonoBehaviour
                 Launch();
                 Debug.Log("¡Gol derecha!");
                 _scoreLeft.IncreasePoint();
+                _scoreLeft.WinLevel();
                 return;
             }
             else
@@ -72,6 +73,7 @@ public class MoveBounce : MonoBehaviour
                 Launch();
                 Debug.Log("¡Gol izquierda!");
                 _scoreRight.IncreasePoint();
+                _scoreRight.WinLevel();
                 return;
             }
             else
