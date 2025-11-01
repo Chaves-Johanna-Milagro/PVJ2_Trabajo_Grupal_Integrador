@@ -48,10 +48,11 @@ public class MoveBounce : MonoBehaviour
             {
                 // Gol derecho
                 transform.position = Vector2.zero;
-                _movePalet.ResetPos();
+                //_movePalet.ResetPos();
                 Launch();
                 Debug.Log("¡Gol derecha!");
                 _scoreLeft.IncreasePoint();
+                _scoreLeft.WinLevel();
                 return;
             }
             else
@@ -68,10 +69,11 @@ public class MoveBounce : MonoBehaviour
             {
                 // Gol izquierdo
                 transform.position = Vector2.zero;
-                _movePalet.ResetPos();
+                //_movePalet.ResetPos();
                 Launch();
                 Debug.Log("¡Gol izquierda!");
                 _scoreRight.IncreasePoint();
+                _scoreRight.WinLevel();
                 return;
             }
             else
