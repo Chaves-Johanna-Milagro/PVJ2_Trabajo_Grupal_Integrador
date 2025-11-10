@@ -20,7 +20,7 @@ public static class StaticSpawnPlayer //Clase encargada de la instanciacion de l
 
         if (!PhotonNetwork.InRoom)
         {
-            Debug.LogWarning("Intentaste spawnear pero no estas en una sala...");
+            Debug.LogWarning("[StaticSpawnPlayer] Intentaste spawnear pero no estas en una sala...");
             return;
         }
 

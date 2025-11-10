@@ -15,13 +15,13 @@ public class MainMenu : MonoBehaviour
         {
             SceneManager.LoadScene("SelectLevel");
 
-            Debug.Log("Cargando escena de seleccion de nivel...");
+            Debug.Log("[MainMenu] Cargando escena de seleccion de nivel...");
         });
         _bExit.onClick.AddListener(() =>
         {
             Application.Quit();
 
-            Debug.Log("Saliendo del juego...");
+            Debug.Log("[MainMenu] Saliendo del juego...");
         });
     }
 

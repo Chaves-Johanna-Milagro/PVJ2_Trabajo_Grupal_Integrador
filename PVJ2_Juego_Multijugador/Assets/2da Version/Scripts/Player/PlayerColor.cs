@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using Photon.Pun;
 public class PlayerColor : MonoBehaviourPun // Script para diferenciar y probar la sincro entre jugadores
 {
@@ -10,7 +10,7 @@ public class PlayerColor : MonoBehaviourPun // Script para diferenciar y probar 
     }
     void Start()
     {
-        // Asigna un color random al jugador due�o del script sin afectar a los demas
+        // Asigna un color random al jugador dueño del script sin afectar a los demas
         if (photonView.IsMine)
         {
             Color myColor = GetRandomColor();
@@ -20,7 +20,7 @@ public class PlayerColor : MonoBehaviourPun // Script para diferenciar y probar 
 
             // Todos los jugadores lo persiven 
             photonView.RPC("RPC_SetColor", RpcTarget.OthersBuffered, myColor.r, myColor.g, myColor.b);
-            Debug.Log("Color asignado...");
+            Debug.Log("[PlayerColor] Color asignado...");
         }
 
     }
