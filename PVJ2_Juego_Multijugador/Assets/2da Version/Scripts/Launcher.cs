@@ -37,7 +37,7 @@ public class Launcher : MonoBehaviourPunCallbacks
             {
                 SceneManager.LoadScene("MainMenu");
 
-                Debug.Log("Volviendo al menu...");
+                Debug.Log("[Launcher] Volviendo al menu...");
             });
         }
 
@@ -83,7 +83,7 @@ public class Launcher : MonoBehaviourPunCallbacks
 
         PhotonNetwork.JoinOrCreateRoom(_targetRoomName, options, TypedLobby.Default);
 
-        Debug.Log($"Intentando unirse o crear la sala: {_targetRoomName}");
+        Debug.Log($"[Launcher] Intentando unirse o crear la sala: {_targetRoomName}");
     }
 
     
@@ -92,7 +92,7 @@ public class Launcher : MonoBehaviourPunCallbacks
 
     public override void OnConnectedToMaster()
     {
-        Debug.Log("Conectado al servidor maestro.");
+        Debug.Log("[Launcher] Conectado al servidor maestro.");
 
 
         if (_isConnecting && !string.IsNullOrEmpty(_targetRoomName))
@@ -104,7 +104,7 @@ public class Launcher : MonoBehaviourPunCallbacks
 
     public override void OnJoinedRoom()
     {
-        Debug.Log($"Entraste a la sala: {PhotonNetwork.CurrentRoom.Name}");
+        Debug.Log($"[Launcher] Entraste a la sala: {PhotonNetwork.CurrentRoom.Name}");
 
         // Solo el primer jugador carga el nivel correspondiente
         if (PhotonNetwork.CurrentRoom.PlayerCount == 1)
@@ -123,7 +123,7 @@ public class Launcher : MonoBehaviourPunCallbacks
 
     public override void OnJoinRoomFailed(short returnCode, string message)
     {
-        Debug.LogWarning($"No se pudo unir a la sala: {_targetRoomName}. Motivo: {message}");
+        Debug.LogWarning($"[Launcher] No se pudo unir a la sala: {_targetRoomName}. Motivo: {message}");
 
         RoomOptions options = new RoomOptions { MaxPlayers = _maxPlayersPerRoom };
 
@@ -132,6 +132,6 @@ public class Launcher : MonoBehaviourPunCallbacks
 
     public override void OnDisconnected(DisconnectCause cause)
     {
-        Debug.LogWarning($"Desconectado del servidor. Motivo: {cause}");
+        Debug.LogWarning($"[Launcher] Desconectado del servidor. Motivo: {cause}");
     }
 }
