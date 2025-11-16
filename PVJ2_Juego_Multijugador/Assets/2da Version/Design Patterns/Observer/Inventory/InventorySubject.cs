@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InventorySubject : MonoBehaviourPun
+public class InventorySubject : MonoBehaviourPun // Componente del jugador
 {
     private List<IInventoryObserver> _observers = new List<IInventoryObserver>();
 
@@ -16,7 +16,7 @@ public class InventorySubject : MonoBehaviourPun
             _observers.Add(observer);
             Debug.Log("[InventorySubject] Observer agregado: " + observer.GetType().Name);
 
-            // Enviar puntaje inicial apenas se registra
+            // Enviar inventario inicial apenas se registra
             observer.OnInventoryChanged(_items);
         }
         else
@@ -44,21 +44,21 @@ public class InventorySubject : MonoBehaviourPun
     }
     public void AddItem(Sprite sprite)
     {
-        if (_items.Count >= 3) return;
+        if (!photonView.IsMine) return;
+
+        int id = StaticSpritePowerUps.GetId(sprite);
+
+        photonView.RPC("RPC_AddItem", RpcTarget.AllBuffered, id);
+    }
+
+    // Enviar el nuevo inventario a todos los jugadores que ingresen a la sala
+    [PunRPC]
+    private void RPC_AddItem(int id)
+    {
+        Sprite sprite = StaticSpritePowerUps.GetSprite(id);
 
         _items.Add(sprite);
 
-        foreach (var o in _observers)
-            o.OnInventoryChanged(_items);
-    }
-
-    public void RemoveItem(int index)
-    {
-        if (index < 0 || index >= _items.Count) return;
-
-        _items.RemoveAt(index);
-
-        foreach (var o in _observers)
-            o.OnInventoryChanged(_items);
+        NotifyObservers();
     }
 }

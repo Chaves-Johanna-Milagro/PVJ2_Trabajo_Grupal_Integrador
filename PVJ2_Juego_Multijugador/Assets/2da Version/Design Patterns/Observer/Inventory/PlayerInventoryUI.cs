@@ -16,6 +16,8 @@ public class PlayerInventoryUI : MonoBehaviour, IInventoryObserver // Clase obse
 
     void Start()
     {
+        // Obtenemos los componentes Image de los hijos 
+        // De este modo cambiarlos por los nuevos sprites cuando el jugador obtenga los powerUp
         _slots = new Image[transform.childCount];
 
         for (int i = 0; i < transform.childCount; i++)

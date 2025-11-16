@@ -5,13 +5,24 @@ public class PlayerInventory : MonoBehaviourPun // Componente del jugador
 {
     private InventorySubject _inventorySubject;
 
-    private Sprite _sprite;
+    // Guardamos una lista de sprites obtenidos de los hijos
+    private Sprite[] _childSprites;
 
     void Start()
     {
         _inventorySubject = GetComponent<InventorySubject>();
 
-        _sprite = transform.Find("Circle").GetComponent<SpriteRenderer>().sprite;
+        // Obtener todos los sprites de los hijos para comprobar que se muestre el mismo en la UI
+        SpriteRenderer[] childRenderers = GetComponentsInChildren<SpriteRenderer>();
+
+        _childSprites = new Sprite[childRenderers.Length];
+
+        for (int i = 0; i < childRenderers.Length; i++)
+        {
+            _childSprites[i] = childRenderers[i].sprite;
+        }
+
+        Debug.Log("[PlayerInventory] Sprites encontrados en hijos: " + _childSprites.Length);
     }
 
     void Update()
@@ -25,7 +36,13 @@ public class PlayerInventory : MonoBehaviourPun // Componente del jugador
             if (_inventorySubject != null)
             {
                 Debug.Log("[PlayerInventory] Tecla G presionada → añadiendo item...");
-                _inventorySubject.AddItem(_sprite);
+
+                // Elegir sprite random
+                Sprite randomSprite = _childSprites[Random.Range(0, _childSprites.Length)];
+
+                Debug.Log("[PlayerInventory] Añadiendo item RANDOM → " + randomSprite.name);
+
+                _inventorySubject.AddItem(randomSprite);
             }
             else
             {
