@@ -52,6 +52,7 @@ public class ScoreSubject : MonoBehaviourPun // Componente del jugador
         photonView.RPC("RPC_AddScore", RpcTarget.AllBuffered, amount);
     }
 
+    // Enviar el nuevo puntaje a todos los jugadores que ingresen a la sala
     [PunRPC]
     private void RPC_AddScore(int amount)
     {

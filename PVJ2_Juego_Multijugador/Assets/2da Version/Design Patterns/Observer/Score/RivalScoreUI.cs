@@ -34,6 +34,7 @@ public class RivalScoreUI : MonoBehaviour, IScoreObserver // Clase observadora
         {
             PhotonView pv = s.GetComponent<PhotonView>();
 
+            // Solo registrar al subject RIVAL
             if (pv != null && !pv.IsMine)
             {
                 Debug.Log("[RivalScoreUI] Registrado al nuevo Subject del RIVAL");
