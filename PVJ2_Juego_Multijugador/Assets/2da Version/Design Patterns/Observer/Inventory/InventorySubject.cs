@@ -9,6 +9,8 @@ public class InventorySubject : MonoBehaviourPun // Componente del jugador
 
     private List<Sprite> _items = new List<Sprite>();
 
+    public int GetItemCount() => _items.Count;
+
     public void AddObserver(IInventoryObserver observer)
     {
         if (!_observers.Contains(observer))
@@ -46,10 +48,27 @@ public class InventorySubject : MonoBehaviourPun // Componente del jugador
     {
         if (!photonView.IsMine) return;
 
+        // Evitar la ejecucion si es null el sprite
+        if (_items.Count >= 3) return;
+        if (sprite == null) return;
+
         int id = StaticSpritePowerUps.GetId(sprite);
+
+        if (id < 0) return;
 
         photonView.RPC("RPC_AddItem", RpcTarget.AllBuffered, id);
     }
+    public void RemoveItemAt(int index)
+    {
+        if (!photonView.IsMine) return;
+
+        // Evitar remover si el index esta fuera de rango
+        if (index < 0) return;
+        if (index >= _items.Count) return;
+
+        photonView.RPC("RPC_RemoveItemAt", RpcTarget.AllBuffered, index);
+    }
+
 
     // Enviar el nuevo inventario a todos los jugadores que ingresen a la sala
     [PunRPC]
@@ -61,4 +80,17 @@ public class InventorySubject : MonoBehaviourPun // Componente del jugador
 
         NotifyObservers();
     }
+
+    [PunRPC]
+    private void RPC_RemoveItemAt(int index)
+    {
+        if (index < 0 || index >= _items.Count) return;
+
+        Debug.Log("[InventorySubject] RPC remove index " + index);
+
+        _items.RemoveAt(index); // Reacomoda la lista automáticamente
+
+        NotifyObservers(); // Actualiza UI del local y rival
+    }
+
 }

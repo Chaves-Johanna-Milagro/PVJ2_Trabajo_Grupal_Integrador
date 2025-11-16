@@ -42,6 +42,7 @@ MonoBehaviour:
   - RPC_SetColor
   - RPC_AddScore
   - RPC_AddItem
+  - RPC_RemoveItemAt
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
