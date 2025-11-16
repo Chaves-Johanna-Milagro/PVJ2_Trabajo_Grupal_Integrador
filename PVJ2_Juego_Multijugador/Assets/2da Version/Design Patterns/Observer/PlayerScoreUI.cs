@@ -1,11 +1,10 @@
-﻿using UnityEngine;
+﻿using Photon.Pun;
 using TMPro;
+using UnityEngine;
 
 public class PlayerScoreUI : MonoBehaviour, IScoreObserver // Clase observadora
 {
     private TMP_Text _textScore;
-
-    private ScoreSubject _subject;
 
     // Bandera para evitar bucles
     private bool _isRegistered = false;
@@ -20,16 +19,20 @@ public class PlayerScoreUI : MonoBehaviour, IScoreObserver // Clase observadora
         // Si ya está registrado → no hacer nada
         if (_isRegistered) return;
 
-        // Si ya encontramos un Subject en escena → registrarlo
-        if (_subject == null)
-        {
-            _subject = FindFirstObjectByType<ScoreSubject>();
+        // Buscamos todos los subjects
+        ScoreSubject[] subjects = FindObjectsOfType<ScoreSubject>();
 
-            if (_subject != null)
+        foreach (var s in subjects)
+        {
+            // Tomamos SOLO el Subject del player local
+            PhotonView pv = s.GetComponent<PhotonView>();
+
+            if (pv != null && pv.IsMine)
             {
-                Debug.Log("[PlayerScoreUI] ScoreSubject encontrado → registrando observer...");
-                _subject.AddObserver(this);
+                Debug.Log("[PlayerScoreUI] Registrado al Subject del player LOCAL");
+                s.AddObserver(this);
                 _isRegistered = true;
+                break;
             }
         }
     }

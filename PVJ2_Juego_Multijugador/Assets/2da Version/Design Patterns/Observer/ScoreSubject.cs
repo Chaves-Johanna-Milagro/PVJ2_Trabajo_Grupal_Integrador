@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ScoreSubject : MonoBehaviourPun // Componente del jugador
 {
-    private int score;
+    private int _score;
 
     private List<IScoreObserver> observers = new List<IScoreObserver>();
 
@@ -14,6 +14,9 @@ public class ScoreSubject : MonoBehaviourPun // Componente del jugador
         {
             observers.Add(observer);
             Debug.Log("[ScoreSubject] Observer agregado: " + observer.GetType().Name);
+
+            //Enviar puntaje inicial apenas se registra
+            observer.OnScoreChanged(_score);
         }
         else
         {
@@ -36,7 +39,7 @@ public class ScoreSubject : MonoBehaviourPun // Componente del jugador
 
         foreach (var o in observers)
         {
-            o.OnScoreChanged(score);
+            o.OnScoreChanged(_score);
         }
     }
 
@@ -52,9 +55,9 @@ public class ScoreSubject : MonoBehaviourPun // Componente del jugador
     [PunRPC]
     private void RPC_AddScore(int amount)
     {
-        score += amount;
+        _score += amount;
 
-        Debug.Log("[ScoreSubject] Puntaje actualizado: " + score);
+        Debug.Log("[ScoreSubject] Puntaje actualizado: " + _score);
 
         NotifyObservers();
     }
