@@ -1,4 +1,4 @@
-using Photon.Pun;
+﻿using Photon.Pun;
 using TMPro;
 using UnityEngine;
 
@@ -9,26 +9,40 @@ public class RivalScoreUI : MonoBehaviour, IScoreObserver // Clase observadora
     // Bandera para evitar bucles
     private bool _isRegistered = false;
 
+    // Guardamos referencia al subject del rival
+    private ScoreSubject _currentSubject; 
+
     void Start()
     {
         _textScore = GetComponent<TMP_Text>();
     }
     void Update()
     {
+        // Si estaba registrado pero el subject YA NO EXISTE → volver a registrarse
+        if (_isRegistered && _currentSubject == null)
+        {
+            _isRegistered = false;
+        }
+
+        // Si ya está registrado → no hacer nada
         if (_isRegistered) return;
 
-        ScoreSubject[] subjects = Object.FindObjectsOfType<ScoreSubject>();
+        // Buscar al nuevo subject del rival
+        ScoreSubject[] subjects = FindObjectsOfType<ScoreSubject>();
 
         foreach (var s in subjects)
         {
             PhotonView pv = s.GetComponent<PhotonView>();
 
-            // Registrarse SOLO al player que NO es el local
             if (pv != null && !pv.IsMine)
             {
-                Debug.Log("[RivalScoreUI] Registrado al Subject del RIVAL");
+                Debug.Log("[RivalScoreUI] Registrado al nuevo Subject del RIVAL");
+
                 s.AddObserver(this);
-                _isRegistered = true;
+
+                _currentSubject = s;    // Guardamos la referencia
+                _isRegistered = true;   // Para no repetir
+
                 break;
             }
         }

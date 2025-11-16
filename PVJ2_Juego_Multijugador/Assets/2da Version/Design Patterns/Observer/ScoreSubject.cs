@@ -15,7 +15,7 @@ public class ScoreSubject : MonoBehaviourPun // Componente del jugador
             observers.Add(observer);
             Debug.Log("[ScoreSubject] Observer agregado: " + observer.GetType().Name);
 
-            //Enviar puntaje inicial apenas se registra
+            // Enviar puntaje inicial apenas se registra
             observer.OnScoreChanged(_score);
         }
         else

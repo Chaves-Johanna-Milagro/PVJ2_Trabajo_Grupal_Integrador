@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
 
@@ -22,12 +22,14 @@ public class UIPlayerSelector : MonoBehaviour
 
         int actorNumber = PhotonNetwork.LocalPlayer.ActorNumber;
 
-        if (actorNumber == 1)
+        // IMPAR → es Player 1
+        if (actorNumber % 2 == 1)
         {
             _uiPlayer1.SetActive(true);
             _uiPlayer2.SetActive(false);
         }
-        else if (actorNumber == 2)
+        // PAR → es Player 2
+        else
         {
             _uiPlayer1.SetActive(false);
             _uiPlayer2.SetActive(true);

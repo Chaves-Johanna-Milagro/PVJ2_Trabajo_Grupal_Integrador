@@ -23,22 +23,10 @@ public class GameManager : MonoBehaviourPunCallbacks
         ShowPlayerCount();
     }
 
-    private void Update()
-    {
-        // Instanciamos al player una vez estamos en la sala
-        if (PhotonNetwork.InRoom)
-        {
-            StaticSpawnPlayer.SpawnEverything();
-        }
-    }
-
     private void LeaveRoom()
     {
         PhotonNetwork.LeaveRoom();
         Debug.Log("[GameManager] Saliendo de la sala...");
-
-        // Reseteamos en spawn una vez salimos de sala
-        StaticSpawnPlayer.Reset(); 
     }
 
     // Muestra la cantidad de jugadores en la sala
@@ -63,9 +51,6 @@ public class GameManager : MonoBehaviourPunCallbacks
     {
         Debug.Log("[GameManager] Jugador local abandonó la sala. Cargando escena de seleccion de nivel...");
         SceneManager.LoadScene("SelectLevel");
-
-        // Reseteamos en spawn una vez salimos de sala
-        StaticSpawnPlayer.Reset(); 
     }
 
 

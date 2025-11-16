@@ -2,7 +2,7 @@ using Photon.Pun;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class SpawnPlayer : MonoBehaviour
+public class SpawnPlayerManager : MonoBehaviour
 {
     private bool _playerSpawned = false;
 

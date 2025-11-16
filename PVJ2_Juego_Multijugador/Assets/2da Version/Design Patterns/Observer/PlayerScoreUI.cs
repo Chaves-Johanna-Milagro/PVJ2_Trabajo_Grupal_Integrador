@@ -9,6 +9,9 @@ public class PlayerScoreUI : MonoBehaviour, IScoreObserver // Clase observadora
     // Bandera para evitar bucles
     private bool _isRegistered = false;
 
+    // Guardamos referencia al subject local
+    private ScoreSubject _currentSubject;  
+
     void Start()
     {
         _textScore = GetComponent<TMP_Text>();
@@ -16,22 +19,32 @@ public class PlayerScoreUI : MonoBehaviour, IScoreObserver // Clase observadora
 
     void Update()
     {
+        // Si estaba registrado pero el subject YA NO EXISTE → volver a buscar
+        if (_isRegistered && _currentSubject == null)
+        {
+            _isRegistered = false;
+        }
+
         // Si ya está registrado → no hacer nada
         if (_isRegistered) return;
 
-        // Buscamos todos los subjects
+        // Buscar subjects en la escena
         ScoreSubject[] subjects = FindObjectsOfType<ScoreSubject>();
 
         foreach (var s in subjects)
         {
-            // Tomamos SOLO el Subject del player local
             PhotonView pv = s.GetComponent<PhotonView>();
 
+            // Solo registrar al subject LOCAL
             if (pv != null && pv.IsMine)
             {
-                Debug.Log("[PlayerScoreUI] Registrado al Subject del player LOCAL");
+                Debug.Log("[PlayerScoreUI] Registrado al Subject LOCAL");
+
                 s.AddObserver(this);
-                _isRegistered = true;
+
+                _currentSubject = s;     // guardamos referencia
+                _isRegistered = true;    // no repetir
+
                 break;
             }
         }
