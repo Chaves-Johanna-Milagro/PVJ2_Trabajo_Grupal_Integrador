@@ -1,12 +1,14 @@
-﻿using UnityEngine;
-
+﻿using ExitGames.Client.Photon;
 using Photon.Pun;
 using Photon.Realtime;
-using ExitGames.Client.Photon;
+using System.Linq;
+using UnityEngine;
 
 public class GameManager : MonoBehaviourPunCallbacks
 {
     private string _readyText = "isReady";
+
+    private IPlayerUI[] _uiScripts;
 
     public override void OnPlayerPropertiesUpdate(Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps)
     {
@@ -45,5 +47,17 @@ public class GameManager : MonoBehaviourPunCallbacks
     public void StartGame()
     {
         Debug.Log("AMBOS jugadores listos → iniciando partida!");
+
+        // Obtiene todos los componentes con la interfaz IPlayerUI una sola vez
+        _uiScripts = FindObjectsOfType<MonoBehaviour>()
+                        .OfType<IPlayerUI>()
+                        .ToArray();
+
+        // Ejecuta el metodo de todas las clases que lo implementen
+        foreach (var ui in _uiScripts)
+        {
+            ui.ActiveUI();
+            Debug.Log("[GameManager] activando ui del jugador...");
+        }
     }
 }

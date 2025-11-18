@@ -2,7 +2,7 @@
 using Photon.Pun;
 using Photon.Realtime;
 
-public class UIPlayerSelector : MonoBehaviour
+public class UIPlayerSelector : MonoBehaviour, IPlayerUI
 {
     private GameObject _uiPlayer1;
     private GameObject _uiPlayer2;
@@ -13,10 +13,11 @@ public class UIPlayerSelector : MonoBehaviour
     {
         _uiPlayer1 = transform.Find("UIPlayer1")?.gameObject;
         _uiPlayer2 = transform.Find("UIPlayer2")?.gameObject;
-    }
 
-    // Update is called once per frame
-    void Update()
+        _uiPlayer1.SetActive(false);
+        _uiPlayer2.SetActive(false);
+    }
+    public void ActiveUI()
     {
         if (_isActiveUI) return;
 

@@ -33,6 +33,7 @@ public class PlayerInventoryUI : MonoBehaviour, IInventoryObserver // Clase obse
             // Botón del slot
             _buttons[i] = transform.GetChild(i).GetComponent<Button>();
 
+            // Permite que los slots se liberen al clikearlos
             int index = i;
             _buttons[i].onClick.AddListener(() =>
             {

@@ -7,8 +7,6 @@ public class RivalInventoryUI : MonoBehaviour, IInventoryObserver // Clase obser
 {
     private Image[] _slots;
 
-    private Button[] _buttons;
-
     // Bandera para evitar bucles
     private bool _isRegistered = false;
 
@@ -20,30 +18,20 @@ public class RivalInventoryUI : MonoBehaviour, IInventoryObserver // Clase obser
         int count = transform.childCount;
 
         _slots = new Image[count];
-        _buttons = new Button[count];
 
         for (int i = 0; i < count; i++)
         {
             // Imagen del slot
             _slots[i] = transform.GetChild(i).GetComponent<Image>();
 
-            // Botón del slot
-            _buttons[i] = transform.GetChild(i).GetComponent<Button>();
-
-            int index = i;
-            _buttons[i].onClick.AddListener(() =>
+            // Desactiva la interaccion con los botones rivales
+            var button = _slots[i].GetComponent<Button>();
+            if (button != null)
             {
-                Debug.Log($"[RivalInventoryUI] Liberando slot {index}");
+                button.interactable = false;
+            }
 
-                if (_currentSubject == null) return;
-
-                int max = _currentSubject.GetItemCount();
-                if (index >= max) return; // ← evita tocarlos vacíos
-
-                _currentSubject.RemoveItemAt(index);
-            });
         }
-
 
     }
 
@@ -88,14 +76,12 @@ public class RivalInventoryUI : MonoBehaviour, IInventoryObserver // Clase obser
             {
                 _slots[i].sprite = items[i];
                 _slots[i].enabled = true;
-                Debug.Log("Imagen cambiada...");
-                _buttons[i].interactable = true;
+                Debug.Log("Imagen rival cambiada...");
             }
             else
             {
                 _slots[i].sprite = null;
                 _slots[i].enabled = false;
-                _buttons[i].interactable = false;
             }
         }
     }
