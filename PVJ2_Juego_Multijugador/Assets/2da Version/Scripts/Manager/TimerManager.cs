@@ -6,7 +6,7 @@ public class TimerManager : MonoBehaviourPun, IPlayerUI
 {
     private TMP_Text _timerText;
 
-    private float _time = 120f;   // tiempo inicial
+    private float _time = 120f;   // tiempo inicial de 2 minutos
     private bool _running = false;
 
     private void Start()
@@ -36,9 +36,19 @@ public class TimerManager : MonoBehaviourPun, IPlayerUI
         // MasterClient manda el tiempo a todos
         photonView.RPC("RPC_UpdateTimer", RpcTarget.All, _time);
     }
+
     public void ActiveUI()
     {
         _running = true;
+    }
+
+    public void DesactiveUI()
+    {
+        _time = 120f;
+
+        _running = false;
+
+        _timerText.text = "00:00";
     }
 
     [PunRPC]

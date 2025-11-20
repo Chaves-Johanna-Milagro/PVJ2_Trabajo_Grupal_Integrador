@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using Photon.Pun;
 using Photon.Realtime;
 
-public class UIPlayerSelector : MonoBehaviour, IPlayerUI
+public class UIPlayerSelector : MonoBehaviour
 {
     private GameObject _uiPlayer1;
     private GameObject _uiPlayer2;
@@ -17,7 +18,7 @@ public class UIPlayerSelector : MonoBehaviour, IPlayerUI
         _uiPlayer1.SetActive(false);
         _uiPlayer2.SetActive(false);
     }
-    public void ActiveUI()
+    private void Update()
     {
         if (_isActiveUI) return;
 
@@ -38,4 +39,5 @@ public class UIPlayerSelector : MonoBehaviour, IPlayerUI
 
         _isActiveUI = true;
     }
+
 }

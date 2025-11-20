@@ -69,6 +69,13 @@ public class InventorySubject : MonoBehaviourPun // Componente del jugador
         photonView.RPC("RPC_RemoveItemAt", RpcTarget.AllBuffered, index);
     }
 
+    public void ResetInventory()
+    {
+        if (!photonView.IsMine) return;
+
+        photonView.RPC("RPC_ResetInventory", RpcTarget.AllBuffered);
+    }
+
 
     // Enviar el nuevo inventario a todos los jugadores que ingresen a la sala
     [PunRPC]
@@ -91,6 +98,16 @@ public class InventorySubject : MonoBehaviourPun // Componente del jugador
         _items.RemoveAt(index); // Reacomoda la lista automáticamente
 
         NotifyObservers(); // Actualiza UI del local y rival
+    }
+
+    [PunRPC]
+    private void RPC_ResetInventory()
+    {
+        Debug.Log("[InventorySubject] Inventario reseteado");
+
+        _items.Clear();
+
+        NotifyObservers();
     }
 
 }

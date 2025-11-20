@@ -44,6 +44,9 @@ MonoBehaviour:
   - RPC_AddItem
   - RPC_RemoveItemAt
   - RPC_UpdateTimer
+  - RPC_RemoveScore
+  - RPC_ResetInventory
+  - RPC_ResetScore
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

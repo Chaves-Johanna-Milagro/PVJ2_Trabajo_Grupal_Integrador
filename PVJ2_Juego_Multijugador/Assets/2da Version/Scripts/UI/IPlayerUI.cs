@@ -4,4 +4,5 @@ using UnityEngine;
 public interface IPlayerUI 
 {
     void ActiveUI();
+    void DesactiveUI();
 }
