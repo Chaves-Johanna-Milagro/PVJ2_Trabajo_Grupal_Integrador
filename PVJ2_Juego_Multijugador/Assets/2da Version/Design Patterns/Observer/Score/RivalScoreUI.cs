@@ -58,10 +58,13 @@ public class RivalScoreUI : MonoBehaviour, IScoreObserver, IPlayerUI // Clase ob
     {
         if (_currentSubject == null) return;
 
+        _currentSubject.ResetScore();
+
         _currentSubject.RemoveObserver(this);
+
         _currentSubject = null;
 
-        Debug.Log("[RivalScoreUI] UI desactivada y observer removido...");
+        Debug.Log("[RivalScoreUI] UI desactivada y observer removido...");  
     }
 
 

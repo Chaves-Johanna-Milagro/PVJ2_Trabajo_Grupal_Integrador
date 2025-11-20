@@ -32,7 +32,7 @@ public class RivalInventoryUI : MonoBehaviour, IInventoryObserver, IPlayerUI // 
 
     }
 
- 
+
     // Se encarga de saber y obtener el componente InventorySubject del jugador Rival
     private InventorySubject FindRivalSubject()
     {
@@ -76,7 +76,10 @@ public class RivalInventoryUI : MonoBehaviour, IInventoryObserver, IPlayerUI // 
     {
         if (_currentSubject == null) return;
 
+        _currentSubject.ResetInventory();
+
         _currentSubject.RemoveObserver(this);
+
         _currentSubject = null;
 
         Debug.Log("[RivalInventoryUI] UI desactivada y observer removido...");

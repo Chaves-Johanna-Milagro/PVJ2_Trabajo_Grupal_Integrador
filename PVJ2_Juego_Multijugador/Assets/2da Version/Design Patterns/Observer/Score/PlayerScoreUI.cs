@@ -61,7 +61,10 @@ public class PlayerScoreUI : MonoBehaviour, IScoreObserver, IPlayerUI // Clase o
     {
         if (_currentSubject == null) return;
 
+        _currentSubject.ResetScore();
+
         _currentSubject.RemoveObserver(this);
+
         _currentSubject = null;
 
         Debug.Log("[PlayerScoreUI] UI desactivada y observer removido...");

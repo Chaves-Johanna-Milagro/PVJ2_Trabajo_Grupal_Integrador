@@ -90,7 +90,10 @@ public class PlayerInventoryUI : MonoBehaviour, IInventoryObserver, IPlayerUI //
     {
         if (_currentSubject == null) return;
 
+        _currentSubject.ResetInventory();
+
         _currentSubject.RemoveObserver(this);
+
         _currentSubject = null;
 
         Debug.Log("[PlayerInventoryUI] UI desactivada y observer removido...");
