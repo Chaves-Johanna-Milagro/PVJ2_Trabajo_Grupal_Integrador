@@ -1,4 +1,4 @@
-using Photon.Pun;
+﻿using Photon.Pun;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -39,14 +39,28 @@ public class InventorySubject : MonoBehaviourPun // Componente del jugador
     {
         Debug.Log("[InventorySubject] Notificando observers... total: " + _observers.Count);
 
+        if (_observers.Count == 0)
+        {
+            Debug.Log("[InventorySubject] No hay observers → NO se notificá...");
+            return;
+        }
+
         foreach (var o in _observers)
         {
             o.OnInventoryChanged(_items);
         }
     }
+
     public void AddItem(Sprite sprite)
     {
         if (!photonView.IsMine) return;
+
+        if (_observers.Count == 0)
+        {
+            Debug.Log("[InventorySubject] No hay observers → NO se añade power up...");
+            return;
+        }
+
 
         // Evitar la ejecucion si es null el sprite
         if (_items.Count >= 3) return;
@@ -58,9 +72,16 @@ public class InventorySubject : MonoBehaviourPun // Componente del jugador
 
         photonView.RPC("RPC_AddItem", RpcTarget.AllBuffered, id);
     }
+
     public void RemoveItemAt(int index)
     {
         if (!photonView.IsMine) return;
+
+        if (_observers.Count == 0)
+        {
+            Debug.Log("[InventorySubject] No hay observers → NO se quita power up...");
+            return;
+        }
 
         // Evitar remover si el index esta fuera de rango
         if (index < 0) return;
@@ -73,6 +94,13 @@ public class InventorySubject : MonoBehaviourPun // Componente del jugador
     {
         if (!photonView.IsMine) return;
 
+        if (_observers.Count == 0)
+        {
+            Debug.Log("[InventorySubject] No hay observers → NO se resetea power up...");
+            return;
+        }
+
+
         photonView.RPC("RPC_ResetInventory", RpcTarget.AllBuffered);
     }
 
@@ -81,6 +109,13 @@ public class InventorySubject : MonoBehaviourPun // Componente del jugador
     [PunRPC]
     private void RPC_AddItem(int id)
     {
+        if (_observers.Count == 0)
+        {
+            Debug.Log("[InventorySubject] RPC_AddItem cancelado → no hay observers...");
+            return;
+        }
+
+
         Sprite sprite = StaticSpritePowerUps.GetSprite(id);
 
         _items.Add(sprite);
@@ -91,11 +126,18 @@ public class InventorySubject : MonoBehaviourPun // Componente del jugador
     [PunRPC]
     private void RPC_RemoveItemAt(int index)
     {
+        if (_observers.Count == 0)
+        {
+            Debug.Log("[InventorySubject] RPC_RemoveItemAt cancelado → no hay observers...");
+            return;
+        }
+
+
         if (index < 0 || index >= _items.Count) return;
 
         Debug.Log("[InventorySubject] RPC remove index " + index);
 
-        _items.RemoveAt(index); // Reacomoda la lista autom�ticamente
+        _items.RemoveAt(index); // Reacomoda la lista automáticamente
 
         NotifyObservers(); // Actualiza UI del local y rival
     }
@@ -103,6 +145,12 @@ public class InventorySubject : MonoBehaviourPun // Componente del jugador
     [PunRPC]
     private void RPC_ResetInventory()
     {
+        if (_observers.Count == 0)
+        {
+            Debug.Log("[InventorySubject] RPC_ResetInventory cancelado → no hay observers...");
+            return;
+        }
+
         Debug.Log("[InventorySubject] Inventario reseteado");
 
         _items.Clear();

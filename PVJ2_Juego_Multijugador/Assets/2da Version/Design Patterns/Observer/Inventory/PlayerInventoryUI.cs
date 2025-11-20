@@ -4,14 +4,11 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerInventoryUI : MonoBehaviour, IInventoryObserver // Clase observadora
+public class PlayerInventoryUI : MonoBehaviour, IInventoryObserver, IPlayerUI // Clase observadora
 {
     private Image[] _slots;
 
     private Button[] _buttons;
-
-    // Bandera para evitar bucles
-    private bool _isRegistered = false;
 
     // Guardamos referencia al subject local
     private InventorySubject _currentSubject;
@@ -50,17 +47,10 @@ public class PlayerInventoryUI : MonoBehaviour, IInventoryObserver // Clase obse
 
     }
 
-    void Update()
+
+    // Se encarga de saber y obtener el componente ScoreSubject del jugador LOCAL
+    private InventorySubject FindLocalSubject()
     {
-        // Si estaba registrado pero el subject YA NO EXISTE → volver a buscar
-        if (_isRegistered && _currentSubject == null)
-        {
-            _isRegistered = false;
-        }
-
-        // Si ya está registrado → no hacer nada
-        if (_isRegistered) return;
-
         // Buscar subjects en la escena
         InventorySubject[] subjects = FindObjectsOfType<InventorySubject>();
 
@@ -71,18 +61,43 @@ public class PlayerInventoryUI : MonoBehaviour, IInventoryObserver // Clase obse
             // Solo registrar al subject LOCAL
             if (pv != null && pv.IsMine)
             {
-                Debug.Log("[PlayerInventoryUI] Registrado al Subject LOCAL");
-
-                s.AddObserver(this);
-
-                _currentSubject = s;     // guardamos referencia
-                _isRegistered = true;    // no repetir
-
-                break;
+                return s;
             }
         }
+
+        return null;
     }
 
+    // Metodos implementados de la interfaz IPlayerUI
+    public void ActiveUI()
+    {
+        // Buscar el subject local
+        _currentSubject = FindLocalSubject();
+
+        if (_currentSubject == null)
+        {
+            Debug.LogWarning("[PlayerInventoryUI] No se encontró Subject local al activar UI...");
+            return;
+        }
+
+        // Registrar el observer una sola vez
+        _currentSubject.AddObserver(this);
+
+        Debug.Log("[PlayerInventoryUI] UI activada y observer registrado...");
+    }
+
+    public void DesactiveUI()
+    {
+        if (_currentSubject == null) return;
+
+        _currentSubject.RemoveObserver(this);
+        _currentSubject = null;
+
+        Debug.Log("[PlayerInventoryUI] UI desactivada y observer removido...");
+    }
+
+
+    // Metodo que implementa la interfaz IInventoryObserver
     public void OnInventoryChanged(List<Sprite> items)
     {
         for (int i = 0; i < _slots.Length; i++)

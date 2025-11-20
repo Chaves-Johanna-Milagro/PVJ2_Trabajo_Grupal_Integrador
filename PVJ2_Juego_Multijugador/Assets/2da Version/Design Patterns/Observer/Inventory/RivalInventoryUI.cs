@@ -3,12 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class RivalInventoryUI : MonoBehaviour, IInventoryObserver // Clase observadora
+public class RivalInventoryUI : MonoBehaviour, IInventoryObserver, IPlayerUI // Clase observadora
 {
     private Image[] _slots;
-
-    // Bandera para evitar bucles
-    private bool _isRegistered = false;
 
     // Guardamos referencia al subject del rival
     private InventorySubject _currentSubject;
@@ -35,17 +32,10 @@ public class RivalInventoryUI : MonoBehaviour, IInventoryObserver // Clase obser
 
     }
 
-    void Update()
+ 
+    // Se encarga de saber y obtener el componente InventorySubject del jugador Rival
+    private InventorySubject FindRivalSubject()
     {
-        // Si estaba registrado pero el subject YA NO EXISTE → volver a buscar
-        if (_isRegistered && _currentSubject == null)
-        {
-            _isRegistered = false;
-        }
-
-        // Si ya está registrado → no hacer nada
-        if (_isRegistered) return;
-
         // Buscar subjects en la escena
         InventorySubject[] subjects = FindObjectsOfType<InventorySubject>();
 
@@ -56,18 +46,44 @@ public class RivalInventoryUI : MonoBehaviour, IInventoryObserver // Clase obser
             // Solo registrar al subject RIVAL
             if (pv != null && !pv.IsMine)
             {
-                Debug.Log("[RivalInventoryUI] Registrado al nuevo Subject del RIVAL");
-
-                s.AddObserver(this);
-
-                _currentSubject = s;    // Guardamos la referencia
-                _isRegistered = true;   // Para no repetir
-
-                break;
+                return s;
             }
         }
+
+        return null;
     }
 
+
+    // Metodos implementados de la interfaz IPlayerUI
+    public void ActiveUI()
+    {
+        // Buscar el subject rival
+        _currentSubject = FindRivalSubject();
+
+        if (_currentSubject == null)
+        {
+            Debug.LogWarning("[RivalInventoryUI] No se encontró Subject rival al activar UI...");
+            return;
+        }
+
+        // Registrar el observer una sola vez
+        _currentSubject.AddObserver(this);
+
+        Debug.Log("[RivalInventoryUI] UI activada y observer registrado...");
+    }
+
+    public void DesactiveUI()
+    {
+        if (_currentSubject == null) return;
+
+        _currentSubject.RemoveObserver(this);
+        _currentSubject = null;
+
+        Debug.Log("[RivalInventoryUI] UI desactivada y observer removido...");
+    }
+
+
+    // Metodo que implementa la interfaz IInventoryObserver
     public void OnInventoryChanged(List<Sprite> items)
     {
         for (int i = 0; i < _slots.Length; i++)
