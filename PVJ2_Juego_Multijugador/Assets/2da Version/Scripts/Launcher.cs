@@ -22,6 +22,11 @@ public class Launcher : MonoBehaviourPunCallbacks
     {
         // Permite que el MasterClient sincronice las escenas con los demás jugadores en su misma sala
         PhotonNetwork.AutomaticallySyncScene = true;
+
+        // Se encarga de que todos manejen el mismo FrameRate
+        PhotonNetwork.SendRate = 50;
+        PhotonNetwork.SerializationRate = 50;
+
     }
 
     private void Start()

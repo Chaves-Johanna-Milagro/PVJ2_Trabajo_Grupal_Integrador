@@ -3,14 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class RivalInventoryUI : MonoBehaviour, IInventoryObserver // Clase observadora
+public class RivalInventoryUI : MonoBehaviour, IInventoryObserver, IPlayerUI // Clase observadora
 {
     private Image[] _slots;
-
-    private Button[] _buttons;
-
-    // Bandera para evitar bucles
-    private bool _isRegistered = false;
 
     // Guardamos referencia al subject del rival
     private InventorySubject _currentSubject;
@@ -20,44 +15,27 @@ public class RivalInventoryUI : MonoBehaviour, IInventoryObserver // Clase obser
         int count = transform.childCount;
 
         _slots = new Image[count];
-        _buttons = new Button[count];
 
         for (int i = 0; i < count; i++)
         {
             // Imagen del slot
             _slots[i] = transform.GetChild(i).GetComponent<Image>();
 
-            // Botón del slot
-            _buttons[i] = transform.GetChild(i).GetComponent<Button>();
-
-            int index = i;
-            _buttons[i].onClick.AddListener(() =>
+            // Desactiva la interaccion con los botones rivales
+            var button = _slots[i].GetComponent<Button>();
+            if (button != null)
             {
-                Debug.Log($"[RivalInventoryUI] Liberando slot {index}");
+                button.interactable = false;
+            }
 
-                if (_currentSubject == null) return;
-
-                int max = _currentSubject.GetItemCount();
-                if (index >= max) return; // ← evita tocarlos vacíos
-
-                _currentSubject.RemoveItemAt(index);
-            });
         }
-
 
     }
 
-    void Update()
+
+    // Se encarga de saber y obtener el componente InventorySubject del jugador Rival
+    private InventorySubject FindRivalSubject()
     {
-        // Si estaba registrado pero el subject YA NO EXISTE → volver a buscar
-        if (_isRegistered && _currentSubject == null)
-        {
-            _isRegistered = false;
-        }
-
-        // Si ya está registrado → no hacer nada
-        if (_isRegistered) return;
-
         // Buscar subjects en la escena
         InventorySubject[] subjects = FindObjectsOfType<InventorySubject>();
 
@@ -68,18 +46,47 @@ public class RivalInventoryUI : MonoBehaviour, IInventoryObserver // Clase obser
             // Solo registrar al subject RIVAL
             if (pv != null && !pv.IsMine)
             {
-                Debug.Log("[RivalInventoryUI] Registrado al nuevo Subject del RIVAL");
-
-                s.AddObserver(this);
-
-                _currentSubject = s;    // Guardamos la referencia
-                _isRegistered = true;   // Para no repetir
-
-                break;
+                return s;
             }
         }
+
+        return null;
     }
 
+
+    // Metodos implementados de la interfaz IPlayerUI
+    public void ActiveUI()
+    {
+        // Buscar el subject rival
+        _currentSubject = FindRivalSubject();
+
+        if (_currentSubject == null)
+        {
+            Debug.LogWarning("[RivalInventoryUI] No se encontró Subject rival al activar UI...");
+            return;
+        }
+
+        // Registrar el observer una sola vez
+        _currentSubject.AddObserver(this);
+
+        Debug.Log("[RivalInventoryUI] UI activada y observer registrado...");
+    }
+
+    public void DesactiveUI()
+    {
+        if (_currentSubject == null) return;
+
+        _currentSubject.ResetInventory();
+
+        _currentSubject.RemoveObserver(this);
+
+        _currentSubject = null;
+
+        Debug.Log("[RivalInventoryUI] UI desactivada y observer removido...");
+    }
+
+
+    // Metodo que implementa la interfaz IInventoryObserver
     public void OnInventoryChanged(List<Sprite> items)
     {
         for (int i = 0; i < _slots.Length; i++)
@@ -88,14 +95,12 @@ public class RivalInventoryUI : MonoBehaviour, IInventoryObserver // Clase obser
             {
                 _slots[i].sprite = items[i];
                 _slots[i].enabled = true;
-                Debug.Log("Imagen cambiada...");
-                _buttons[i].interactable = true;
+                Debug.Log("Imagen rival cambiada...");
             }
             else
             {
                 _slots[i].sprite = null;
                 _slots[i].enabled = false;
-                _buttons[i].interactable = false;
             }
         }
     }

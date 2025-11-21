@@ -2,12 +2,9 @@
 using TMPro;
 using UnityEngine;
 
-public class RivalScoreUI : MonoBehaviour, IScoreObserver // Clase observadora
+public class RivalScoreUI : MonoBehaviour, IScoreObserver, IPlayerUI // Clase observadora
 {
     private TMP_Text _textScore;
-
-    // Bandera para evitar bucles
-    private bool _isRegistered = false;
 
     // Guardamos referencia al subject del rival
     private ScoreSubject _currentSubject; 
@@ -16,18 +13,12 @@ public class RivalScoreUI : MonoBehaviour, IScoreObserver // Clase observadora
     {
         _textScore = GetComponent<TMP_Text>();
     }
-    void Update()
+
+
+    // Se encarga de saber y obtener el componente ScoreSubject del jugador Rival
+    private ScoreSubject FindRivalSubject()
     {
-        // Si estaba registrado pero el subject YA NO EXISTE → volver a registrarse
-        if (_isRegistered && _currentSubject == null)
-        {
-            _isRegistered = false;
-        }
-
-        // Si ya está registrado → no hacer nada
-        if (_isRegistered) return;
-
-        // Buscar al nuevo subject del rival
+        // Buscar subjects en la escena
         ScoreSubject[] subjects = FindObjectsOfType<ScoreSubject>();
 
         foreach (var s in subjects)
@@ -37,18 +28,47 @@ public class RivalScoreUI : MonoBehaviour, IScoreObserver // Clase observadora
             // Solo registrar al subject RIVAL
             if (pv != null && !pv.IsMine)
             {
-                Debug.Log("[RivalScoreUI] Registrado al nuevo Subject del RIVAL");
-
-                s.AddObserver(this);
-
-                _currentSubject = s;    // Guardamos la referencia
-                _isRegistered = true;   // Para no repetir
-
-                break;
+                return s;
             }
         }
+
+        return null;
     }
 
+
+    // Metodos implementados de la interfaz IPlayerUI
+    public void ActiveUI()
+    {
+        // Buscar el subject rival
+        _currentSubject = FindRivalSubject();
+
+        if (_currentSubject == null)
+        {
+            Debug.LogWarning("[RivalScoreUI] No se encontró Subject rival al activar UI...");
+            return;
+        }
+
+        // Registrar el observer una sola vez
+        _currentSubject.AddObserver(this);
+
+        Debug.Log("[RivalScoreUI] UI activada y observer registrado...");
+    }
+
+    public void DesactiveUI()
+    {
+        if (_currentSubject == null) return;
+
+        _currentSubject.ResetScore();
+
+        _currentSubject.RemoveObserver(this);
+
+        _currentSubject = null;
+
+        Debug.Log("[RivalScoreUI] UI desactivada y observer removido...");  
+    }
+
+
+    // Metodo implementado de la interfaz IScoreObserver
     public void OnScoreChanged(int newScore)
     {
         _textScore.text = "Rival puntaje " + newScore;

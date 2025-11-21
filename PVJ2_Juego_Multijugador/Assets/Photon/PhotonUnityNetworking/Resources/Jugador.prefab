@@ -13,11 +13,10 @@ GameObject:
   - component: {fileID: 7492858080670023122}
   - component: {fileID: 2266084539972424005}
   - component: {fileID: -7966175913600530880}
-  - component: {fileID: -5822798478113272016}
   - component: {fileID: 213455686145664235}
-  - component: {fileID: 8352454508445318237}
-  - component: {fileID: 6539202175666318296}
-  - component: {fileID: 8632176223517272483}
+  - component: {fileID: 1938197489529506083}
+  - component: {fileID: 2180405758531480628}
+  - component: {fileID: -7946552747943841516}
   m_Layer: 0
   m_Name: Jugador
   m_TagString: Untagged
@@ -168,18 +167,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abb1e198d576ebd4a94b194fe7ce118c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &-5822798478113272016
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1178420593529077749}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0d6de199f0778614eb2363f2ebeb0c2d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &213455686145664235
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -199,11 +186,38 @@ MonoBehaviour:
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents:
-  - {fileID: 8352454508445318237}
+  - {fileID: -7946552747943841516}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &8352454508445318237
+--- !u!50 &1938197489529506083
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1178420593529077749}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 6200000, guid: c5fb1b37e3270134dab3aad06c3486a4, type: 2}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 1
+  m_SleepingMode: 1
+  m_CollisionDetection: 1
+  m_Constraints: 4
+--- !u!114 &2180405758531480628
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -212,31 +226,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1178420593529077749}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8efc6b1d64977384eb3405357896c656, type: 3}
+  m_Script: {fileID: 11500000, guid: 178846f6a6196b040a0d3f182bfd0a82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_PositionModel:
-    SynchronizeEnabled: 1
-    TeleportEnabled: 1
-    TeleportIfDistanceGreaterThan: 3
-    InterpolateOption: 2
-    InterpolateMoveTowardsSpeed: 1
-    InterpolateLerpSpeed: 1
-    ExtrapolateOption: 0
-    ExtrapolateSpeed: 1
-    ExtrapolateIncludingRoundTripTime: 1
-    ExtrapolateNumberOfStoredPositions: 1
-  m_RotationModel:
-    SynchronizeEnabled: 0
-    InterpolateOption: 1
-    InterpolateRotateTowardsSpeed: 180
-    InterpolateLerpSpeed: 5
-  m_ScaleModel:
-    SynchronizeEnabled: 0
-    InterpolateOption: 0
-    InterpolateMoveTowardsSpeed: 1
-    InterpolateLerpSpeed: 0
---- !u!114 &6539202175666318296
+--- !u!114 &-7946552747943841516
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -245,21 +238,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1178420593529077749}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b7c1471deff815348a32ecd09dc94c17, type: 3}
+  m_Script: {fileID: 11500000, guid: 0e7cb724808c322458aa4d15f5035fa9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &8632176223517272483
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1178420593529077749}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b42e006f8ab19b747bffeece983b57b5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_SynchronizeVelocity: 1
+  m_SynchronizeAngularVelocity: 1
+  m_TeleportEnabled: 0
+  m_TeleportIfDistanceGreaterThan: 3
 --- !u!1 &2265240138354713456
 GameObject:
   m_ObjectHideFlags: 0
@@ -276,7 +261,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1099366312415578774
 Transform:
   m_ObjectHideFlags: 0
@@ -363,7 +348,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6418003876427223075
 Transform:
   m_ObjectHideFlags: 0
@@ -450,7 +435,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8395365290965419470
 Transform:
   m_ObjectHideFlags: 0

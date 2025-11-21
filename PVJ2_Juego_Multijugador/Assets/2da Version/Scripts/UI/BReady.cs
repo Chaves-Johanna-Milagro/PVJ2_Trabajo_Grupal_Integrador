@@ -5,15 +5,12 @@ using ExitGames.Client.Photon;
 
 public class BReady : MonoBehaviour
 {
-    private GameObject _blackImg;
     private Button _bReady;
 
     private string _readyText = "isReady";
 
     void Start()
     {
-        _blackImg = transform.parent.transform.Find("BlackImg").gameObject; 
-
         _bReady = GetComponent<Button>();
 
         _bReady.onClick.AddListener(PlayerReady);
@@ -21,7 +18,6 @@ public class BReady : MonoBehaviour
 
     private void PlayerReady()
     {
-        _blackImg.SetActive(true);
         _bReady.gameObject.SetActive(false);
         Debug.Log("Jugador listo!!!");
 
@@ -31,6 +27,14 @@ public class BReady : MonoBehaviour
         // Marcar jugador listo
         Hashtable data = new Hashtable();
         data[_readyText] = true;
+        PhotonNetwork.LocalPlayer.SetCustomProperties(data);
+    }
+
+    private void OnDestroy()
+    {
+        // Resetear el marcador
+        Hashtable data = new Hashtable();
+        data[_readyText] = false;
         PhotonNetwork.LocalPlayer.SetCustomProperties(data);
     }
 }

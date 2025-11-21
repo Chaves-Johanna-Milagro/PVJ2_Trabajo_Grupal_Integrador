@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using Photon.Pun;
 using Photon.Realtime;
 
@@ -13,10 +14,11 @@ public class UIPlayerSelector : MonoBehaviour
     {
         _uiPlayer1 = transform.Find("UIPlayer1")?.gameObject;
         _uiPlayer2 = transform.Find("UIPlayer2")?.gameObject;
-    }
 
-    // Update is called once per frame
-    void Update()
+        _uiPlayer1.SetActive(false);
+        _uiPlayer2.SetActive(false);
+    }
+    private void Update()
     {
         if (_isActiveUI) return;
 
@@ -37,4 +39,5 @@ public class UIPlayerSelector : MonoBehaviour
 
         _isActiveUI = true;
     }
+
 }

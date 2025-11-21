@@ -1,13 +1,20 @@
-﻿using UnityEngine;
-
+﻿using ExitGames.Client.Photon;
 using Photon.Pun;
 using Photon.Realtime;
-using ExitGames.Client.Photon;
+using System.Linq;
+using UnityEngine;
 
 public class GameManager : MonoBehaviourPunCallbacks
 {
     private string _readyText = "isReady";
 
+    private IPlayerUI[] _uiScripts;
+
+    private void Start()
+    {
+        // Evitamos que se sincronizen las escenas haci cada jugador al ganar/perder va a la escena correcta
+        PhotonNetwork.AutomaticallySyncScene = false;
+    }
     public override void OnPlayerPropertiesUpdate(Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps)
     {
         if (changedProps.ContainsKey(_readyText))
@@ -45,5 +52,28 @@ public class GameManager : MonoBehaviourPunCallbacks
     public void StartGame()
     {
         Debug.Log("AMBOS jugadores listos → iniciando partida!");
+
+        // Obtiene todos los componentes con la interfaz IPlayerUI una sola vez
+        _uiScripts = FindObjectsOfType<MonoBehaviour>()
+                        .OfType<IPlayerUI>()
+                        .ToArray();
+
+        // Ejecuta el metodo de todas las clases que lo implementen
+        foreach (var ui in _uiScripts)
+        {
+            ui.ActiveUI();
+            Debug.Log("[GameManager] activando ui del jugador...");
+        }
+
+        // Spawneamos la pelota
+       // PhotonNetwork.Instantiate("Pelota", Vector2.zero, Quaternion.identity);
+        //Debug.Log("[GameManager] pelota instanciada..");
+        if (PhotonNetwork.IsMasterClient)
+        {
+            PhotonNetwork.Instantiate("Pelota", Vector2.zero, Quaternion.identity);
+            Debug.Log("[GameManager] pelota instanciada..");
+        }
+
+
     }
 }
