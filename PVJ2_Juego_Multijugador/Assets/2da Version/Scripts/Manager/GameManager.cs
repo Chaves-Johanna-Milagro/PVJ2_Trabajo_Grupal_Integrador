@@ -10,6 +10,11 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     private IPlayerUI[] _uiScripts;
 
+    private void Start()
+    {
+        // Evitamos que se sincronizen las escenas haci cada jugador al ganar/perder va a la escena correcta
+        PhotonNetwork.AutomaticallySyncScene = false;
+    }
     public override void OnPlayerPropertiesUpdate(Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps)
     {
         if (changedProps.ContainsKey(_readyText))
@@ -61,13 +66,13 @@ public class GameManager : MonoBehaviourPunCallbacks
         }
 
         // Spawneamos la pelota
-        PhotonNetwork.Instantiate("Pelota", Vector2.zero, Quaternion.identity);
-        Debug.Log("[GameManager] pelota instanciada..");
-        /*if (PhotonNetwork.IsMasterClient)
+       // PhotonNetwork.Instantiate("Pelota", Vector2.zero, Quaternion.identity);
+        //Debug.Log("[GameManager] pelota instanciada..");
+        if (PhotonNetwork.IsMasterClient)
         {
             PhotonNetwork.Instantiate("Pelota", Vector2.zero, Quaternion.identity);
             Debug.Log("[GameManager] pelota instanciada..");
-        }*/
+        }
 
 
     }

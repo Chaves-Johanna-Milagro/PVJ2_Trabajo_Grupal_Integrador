@@ -1,6 +1,7 @@
 ﻿using Photon.Pun;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ScoreSubject : MonoBehaviourPun // Componente del jugador
 {
@@ -109,6 +110,19 @@ public class ScoreSubject : MonoBehaviourPun // Componente del jugador
         Debug.Log("[ScoreSubject] Puntaje actualizado: " + _score);
 
         NotifyObservers();
+
+        // Enviar a la pantalla correspondiente
+        if (_score >= 11)
+        {
+            if (photonView.IsMine)
+            {
+                SceneManager.LoadScene("Victoria");
+            }
+            if (!photonView.IsMine)
+            {
+                SceneManager.LoadScene("Derrota");
+            }
+        }
     }
 
     [PunRPC]

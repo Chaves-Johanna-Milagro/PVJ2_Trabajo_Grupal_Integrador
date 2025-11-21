@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
 using Photon.Pun;
 
@@ -37,6 +38,13 @@ public class PlayerMove : MonoBehaviourPun
 
         _min.y += spriteExtent.y;
         _max.y -= spriteExtent.y;
+
+        // Si estamos en Level_1, bloquear movimiento horizontal
+        if (SceneManager.GetActiveScene().name == "Level_1")
+        {
+            _min.x = transform.position.x;
+            _max.x = transform.position.x;
+        }
     }
 
     void Update()

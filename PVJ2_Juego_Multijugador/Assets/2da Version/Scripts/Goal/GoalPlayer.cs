@@ -1,9 +1,10 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Photon.Pun;
 
 public class GoalPlayer : MonoBehaviourPun
 {
-    private ScoreSubject _scoreSubject;
+    private ScoreSubject _myScore;
 
     private int _score = 1;
 
@@ -29,11 +30,11 @@ public class GoalPlayer : MonoBehaviourPun
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        _scoreSubject = FindLocalSubject();
+        _myScore = FindLocalSubject();
 
         if (collision.tag == "Ball")
         {
-            _scoreSubject.AddScore(_score);
+            _myScore.AddScore(_score);
             Debug.Log("[GoalPlayer] punto anotado...");
         }
     }
