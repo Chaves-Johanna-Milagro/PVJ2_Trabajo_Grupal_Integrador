@@ -47,6 +47,8 @@ MonoBehaviour:
   - RPC_RemoveScore
   - RPC_ResetInventory
   - RPC_ResetScore
+  - ResetBall
+  - RPC_RequestCurrentTime
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

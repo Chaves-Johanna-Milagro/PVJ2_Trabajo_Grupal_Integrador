@@ -59,5 +59,8 @@ public class GameManager : MonoBehaviourPunCallbacks
             ui.ActiveUI();
             Debug.Log("[GameManager] activando ui del jugador...");
         }
+
+        // Spawneamos la pelota
+        PhotonNetwork.Instantiate("Pelota", Vector2.zero, Quaternion.identity);
     }
 }

@@ -6,9 +6,6 @@ public class PlayerScoreUI : MonoBehaviour, IScoreObserver, IPlayerUI // Clase o
 {
     private TMP_Text _textScore;
 
-    // Bandera para evitar bucles
-    private bool _isRegistered = false;
-
     // Guardamos referencia al subject local
     private ScoreSubject _currentSubject;  
 
