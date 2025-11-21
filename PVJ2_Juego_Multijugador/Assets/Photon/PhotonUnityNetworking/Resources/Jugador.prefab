@@ -13,11 +13,7 @@ GameObject:
   - component: {fileID: 7492858080670023122}
   - component: {fileID: 2266084539972424005}
   - component: {fileID: -7966175913600530880}
-  - component: {fileID: -5822798478113272016}
   - component: {fileID: 213455686145664235}
-  - component: {fileID: 8352454508445318237}
-  - component: {fileID: 6539202175666318296}
-  - component: {fileID: 8632176223517272483}
   - component: {fileID: 1938197489529506083}
   - component: {fileID: 2180405758531480628}
   - component: {fileID: -7946552747943841516}
@@ -171,18 +167,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abb1e198d576ebd4a94b194fe7ce118c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &-5822798478113272016
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1178420593529077749}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0d6de199f0778614eb2363f2ebeb0c2d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &213455686145664235
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -202,68 +186,10 @@ MonoBehaviour:
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents:
-  - {fileID: 8352454508445318237}
   - {fileID: -7946552747943841516}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &8352454508445318237
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1178420593529077749}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8efc6b1d64977384eb3405357896c656, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_PositionModel:
-    SynchronizeEnabled: 1
-    TeleportEnabled: 1
-    TeleportIfDistanceGreaterThan: 3
-    InterpolateOption: 2
-    InterpolateMoveTowardsSpeed: 1
-    InterpolateLerpSpeed: 1
-    ExtrapolateOption: 0
-    ExtrapolateSpeed: 1
-    ExtrapolateIncludingRoundTripTime: 1
-    ExtrapolateNumberOfStoredPositions: 1
-  m_RotationModel:
-    SynchronizeEnabled: 0
-    InterpolateOption: 1
-    InterpolateRotateTowardsSpeed: 180
-    InterpolateLerpSpeed: 5
-  m_ScaleModel:
-    SynchronizeEnabled: 0
-    InterpolateOption: 0
-    InterpolateMoveTowardsSpeed: 1
-    InterpolateLerpSpeed: 0
---- !u!114 &6539202175666318296
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1178420593529077749}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b7c1471deff815348a32ecd09dc94c17, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &8632176223517272483
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1178420593529077749}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b42e006f8ab19b747bffeece983b57b5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!50 &1938197489529506083
 Rigidbody2D:
   serializedVersion: 5

@@ -14,12 +14,21 @@ public class MoveBall : MonoBehaviourPunCallbacks
     {
         _rb = GetComponent<Rigidbody2D>();
 
+        /*if (!PhotonNetwork.IsMasterClient)
+        {
+            _rb.simulated = false; // evitar la sinulacion de física en clientes
+            return;
+        }*/
+
         Launch();
     }
 
     void FixedUpdate()
     {
         if (!PhotonNetwork.IsMasterClient) return;
+
+        // Normalizamos la velosidad para que sea constante
+        _rb.linearVelocity = _rb.linearVelocity.normalized * _speed;
 
         Vector2 pos = _rb.position;
 

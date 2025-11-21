@@ -62,5 +62,13 @@ public class GameManager : MonoBehaviourPunCallbacks
 
         // Spawneamos la pelota
         PhotonNetwork.Instantiate("Pelota", Vector2.zero, Quaternion.identity);
+        Debug.Log("[GameManager] pelota instanciada..");
+        /*if (PhotonNetwork.IsMasterClient)
+        {
+            PhotonNetwork.Instantiate("Pelota", Vector2.zero, Quaternion.identity);
+            Debug.Log("[GameManager] pelota instanciada..");
+        }*/
+
+
     }
 }
