@@ -71,6 +71,6 @@ public class RivalScoreUI : MonoBehaviour, IScoreObserver, IPlayerUI // Clase ob
     // Metodo implementado de la interfaz IScoreObserver
     public void OnScoreChanged(int newScore)
     {
-        _textScore.text = "Rival puntaje " + newScore;
+        _textScore.text = "Rival " + newScore.ToString();
     }
 }
