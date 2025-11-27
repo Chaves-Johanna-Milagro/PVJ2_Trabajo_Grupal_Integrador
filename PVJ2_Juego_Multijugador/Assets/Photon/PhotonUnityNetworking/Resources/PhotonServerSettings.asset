@@ -49,6 +49,16 @@ MonoBehaviour:
   - RPC_ResetScore
   - ResetBall
   - RPC_RequestCurrentTime
+  - RPC_ReturnAllBalls
+  - RPC_ReturnBall
+  - RPC_SpawnBall
+  - RPC_ActivateBall
+  - RPC_DeactivateBall
+  - RPC_Launch
+  - RPC_ClearPool
+  - RPC_InitializePool
+  - RPC_SetBallScale
+  - RPC_SetBallType
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
