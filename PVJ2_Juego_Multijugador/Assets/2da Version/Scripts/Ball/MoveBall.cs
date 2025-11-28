@@ -4,9 +4,9 @@ using Photon.Realtime;
 public class MoveBall : MonoBehaviourPunCallbacks
 {
     private float _speed = 8f;
-    private float _limitX = 9f;      // Límite horizontal
-    private float _limitY = 4.5f;    // Límite vertical
-    private float _goalHeight = 3f;  // Altura del área de gol (zona central)
+    private float _limitX = 9f;      // LÃ­mite horizontal
+    private float _limitY = 4.5f;    // LÃ­mite vertical
+    private float _goalHeight = 3f;  // Altura del ï¿½rea de gol (zona central)
 
     private Rigidbody2D _rb;
 
@@ -16,7 +16,7 @@ public class MoveBall : MonoBehaviourPunCallbacks
 
         /*if (!PhotonNetwork.IsMasterClient)
         {
-            _rb.simulated = false; // evitar la sinulacion de física en clientes
+            _rb.simulated = false; //evitar la sinulacion de fÃ­sica en clientes
             return;
         }*/
 
@@ -38,16 +38,15 @@ public class MoveBall : MonoBehaviourPunCallbacks
             _rb.linearVelocity = new Vector2(_rb.linearVelocity.x, -_rb.linearVelocity.y);
         }
 
-        // Si se pasa del límite derecho
+        // Si se pasa del lÃ­mite derecho
         if (pos.x > _limitX)
         {
             if (Mathf.Abs(pos.y) < _goalHeight / 2f)
             {
                 // Gol derecho
-                Debug.Log("¡Gol derecha!");
+                Debug.Log("Gol derecha!");
 
                 photonView.RPC("ResetBall", RpcTarget.All);
-
                 return;
             }
             else
@@ -57,16 +56,15 @@ public class MoveBall : MonoBehaviourPunCallbacks
             }
         }
 
-        // Si se pasa del límite izquierdo
+        // Si se pasa del lÃ­mite izquierdo
         if (pos.x < -_limitX)
         {
             if (Mathf.Abs(pos.y) < _goalHeight / 2f)
             {
                 // Gol izquierdo
-                Debug.Log("¡Gol izquierda!");
+                Debug.Log("Gol izquierda!");
 
                 photonView.RPC("ResetBall", RpcTarget.All);
-
                 return;
             }
             else
@@ -82,8 +80,8 @@ public class MoveBall : MonoBehaviourPunCallbacks
         Vector2 dir = new Vector2(Random.value < 0.5f ? -1f : 1f, Random.Range(-0.5f, 0.5f)).normalized;
         _rb.linearVelocity = dir * _speed;// * Time.fixedDeltaTime;
     }
-
-    // RPC para sincronizar posición y relanzar la pelota
+    
+    //RPC para sincronizar posiciÃ³n y relanzar la pelota
     [PunRPC]
     private void ResetBall()
     {
@@ -99,9 +97,7 @@ public class MoveBall : MonoBehaviourPunCallbacks
         // Solo el nuevo MasterClient relanza la pelota
         if (PhotonNetwork.IsMasterClient)
         {
-            photonView.RPC("ResetBall", RpcTarget.All); // método que relanza la pelota en todos
+            photonView.RPC("ResetBall", RpcTarget.All); // mÃ©todo que relanza la pelota en todos
         }
     }
-
-
 }
