@@ -6,7 +6,7 @@ public class TimerManager : MonoBehaviourPun, IPlayerUI
 {
     private TMP_Text _timerText;
 
-    private float _time = 120f;   // tiempo inicial de 2 minutos
+    private float _time = 180f;   // tiempo inicial de 3 minutos
     private bool _running = false;
 
     private void Start()

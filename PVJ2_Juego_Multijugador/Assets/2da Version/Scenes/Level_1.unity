@@ -473,14 +473,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 79278876082842212, guid: 02549dd1dbffcee42864e04b0671cc21, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3377078384595259943, guid: 02549dd1dbffcee42864e04b0671cc21, type: 3}
-      propertyPath: m_IsTrigger
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7892900999763188564, guid: 02549dd1dbffcee42864e04b0671cc21, type: 3}
       propertyPath: m_Name
       value: GoalSelector
