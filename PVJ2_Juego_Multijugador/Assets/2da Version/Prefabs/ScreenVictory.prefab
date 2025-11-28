@@ -65,7 +65,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: EXIT ROOM
+  m_text: ELEGIR NIVEL
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7f8d1cdff40806f40a1340e53acccb2d, type: 2}
   m_sharedMaterial: {fileID: -8244519160576652679, guid: 7f8d1cdff40806f40a1340e53acccb2d, type: 2}
@@ -92,7 +92,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 39.7
+  m_fontSize: 33.2
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1

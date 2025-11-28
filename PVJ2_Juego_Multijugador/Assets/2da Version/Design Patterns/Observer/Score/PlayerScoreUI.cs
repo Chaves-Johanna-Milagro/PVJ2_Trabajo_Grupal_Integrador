@@ -73,7 +73,7 @@ public class PlayerScoreUI : MonoBehaviour, IScoreObserver, IPlayerUI // Clase o
     {
         Debug.Log("[PlayerScoreUI] OnScoreChanged recibido → nuevo score: " + newScore);
 
-        _textScore.text = "My " + newScore.ToString();
+        _textScore.text = "MI\nPUNTAJE:\n" + newScore.ToString();
     }
 
 
